@@ -39,7 +39,7 @@ CREATE TABLE direccion (
 
 CREATE TABLE gafa (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  marca VARCHAR(50) NOT NULL UNIQUE,
+  marca VARCHAR(50) NOT NULL,
   graduacion_derecha DECIMAL(5,2),
   graduacion_izquierda DECIMAL(5,2),
   tipo_montura ENUM('flotante', 'pasta', 'metalica') NOT NULL,
