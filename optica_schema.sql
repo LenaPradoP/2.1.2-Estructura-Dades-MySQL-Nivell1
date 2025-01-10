@@ -56,6 +56,7 @@ CREATE TABLE venta (
   id_cliente INT UNSIGNED NOT NULL,
   id_empleado INT UNSIGNED NOT NULL,
   fecha_venta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  total DECIMAL(10,2) DEFAULT 0,
   FOREIGN KEY (id_cliente) REFERENCES persona (id),
   FOREIGN KEY (id_empleado) REFERENCES persona (id)
 );
@@ -68,6 +69,25 @@ CREATE TABLE gafa_vendida (
   FOREIGN KEY (id_venta) REFERENCES venta (id) ON DELETE CASCADE,
   FOREIGN KEY (id_gafa) REFERENCES gafa (id)
 );
+
+
+DELIMITER //
+
+CREATE TRIGGER actualizar_total_venta
+AFTER INSERT ON gafa_vendida
+FOR EACH ROW
+BEGIN
+  UPDATE venta
+  SET total = (
+      SELECT SUM(g.precio * gv.cantidad)
+      FROM gafa_vendida gv
+      JOIN gafa g ON gv.id_gafa = g.id
+      WHERE gv.id_venta = NEW.id_venta
+  )
+  WHERE id = NEW.id_venta;
+END;
+//
+
 
 INSERT INTO proveedor(id, nombre, telefono, fax, nif) VALUES 
   (1, 'Kwinu', '756641485', '121287716', 'W3111193C'),

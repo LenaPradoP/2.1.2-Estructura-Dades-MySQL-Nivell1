@@ -1,0 +1,3 @@
+SELECT p.nombre, p.apellido1, p.apellido2, SUM(v.total) AS total_compras FROM persona p JOIN venta v ON p.id = v.id_cliente WHERE p.id = 1;
+SELECT g.marca, g.tipo_montura, g.color_montura, g.color_cristales, g.precio FROM gafa g JOIN gafa_vendida gv ON g.id = gv.id_gafa JOIN venta v ON gv.id_venta = v.id JOIN persona p ON v.id_empleado = p.id WHERE p.tipo = 'empleado' AND YEAR(v.fecha_venta) = '2024'AND p.id = 10 ORDER BY v.fecha_venta ASC;
+SELECT pr.nombre AS proveedor, pr.nif, SUM(v.total) AS total_ventas FROM proveedor pr INNER JOIN gafa g ON pr.id = g.id_proveedor JOIN gafa_vendida gv ON g.id = gv.id_gafa JOIN venta v ON gv.id_venta = v.id  GROUP BY pr.id ORDER BY pr.nombre;
