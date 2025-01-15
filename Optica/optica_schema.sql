@@ -5,7 +5,7 @@ USE optica;
 CREATE TABLE proveedor (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
   nombre VARCHAR(50) NOT NULL,
-  telefono VARCHAR(15),
+  telefono VARCHAR(15) NOT NULL,
   fax VARCHAR(15),
   nif VARCHAR(15) UNIQUE NOT NULL
 );
@@ -25,13 +25,13 @@ CREATE TABLE persona (
 
 CREATE TABLE direccion (
   id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-  calle VARCHAR(100),
-  numero VARCHAR(10),
-  piso VARCHAR(20),
+  calle VARCHAR(100) NOT NULL,
+  numero VARCHAR(10) NOT NULL,
+  piso VARCHAR(20) NOT NULL,
   puerta VARCHAR(20),
-  ciudad VARCHAR(50),
-  codigo_postal VARCHAR(10),
-  pais VARCHAR(50),
+  ciudad VARCHAR(50) NOT NULL,
+  codigo_postal VARCHAR(10) NOT NULL,
+  pais VARCHAR(50) NOT NULL,
   id_proveedor INT UNSIGNED,
   id_persona INT UNSIGNED,
   FOREIGN KEY (id_proveedor) REFERENCES proveedor (id) ON DELETE CASCADE,
@@ -47,7 +47,7 @@ CREATE TABLE gafa (
   color_montura VARCHAR(25),
   color_cristales VARCHAR(25),
   precio DECIMAL(10,2) NOT NULL,
-  id_proveedor INT UNSIGNED,
+  id_proveedor INT UNSIGNED NOT NULL,
   FOREIGN KEY (id_proveedor) REFERENCES proveedor (id) ON DELETE SET NULL
 );
 
