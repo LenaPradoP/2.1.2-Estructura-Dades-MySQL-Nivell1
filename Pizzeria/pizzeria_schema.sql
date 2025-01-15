@@ -42,11 +42,11 @@ CREATE TABLE categoria_pizza (
 CREATE TABLE producto (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(50) NOT NULL,
-    descripcion TEXT,
-    imagen VARCHAR(255),
+    descripcion TEXT NOT NULL,
+    imagen VARCHAR(255) NOT NULL,
     precio DECIMAL(10, 2) NOT NULL,
     tipo ENUM('pizza', 'hamburguesa', 'bebida') NOT NULL,
-    id_categoria INT UNSIGNED,
+    id_categoria INT UNSIGNED NOT NULL,
     FOREIGN KEY (id_categoria) REFERENCES categoria_pizza(id)
 );
 
@@ -54,20 +54,22 @@ CREATE TABLE pedido (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
     fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     tipo ENUM('recogida', 'entrega') NOT NULL,
-    id_tienda INT UNSIGNED,
-    id_cliente INT UNSIGNED,
+    id_tienda INT UNSIGNED NOT NULL,
+    id_cliente INT UNSIGNE NOT NULL,
+    id_cocinero INT UNSIGNED NOT NULL,
     id_repartidor INT UNSIGNED,
-    entrega TIMESTAMP,
+    entrega TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     total DECIMAL(10, 2) DEFAULT 0,
     FOREIGN KEY (id_tienda) REFERENCES tienda(id),
     FOREIGN KEY (id_cliente) REFERENCES cliente(id),
+    FOREIGN KEY (id_cocinero) REFERENCES empleado(id),
     FOREIGN KEY (id_repartidor) REFERENCES empleado(id)
 );
 
 CREATE TABLE producto_vendido (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
-    id_producto INT UNSIGNED,
-    id_pedido INT UNSIGNED,
+    id_producto INT UNSIGNED NOT NULL,
+    id_pedido INT UNSIGNED NOT NULL,
     cantidad INT NOT NULL DEFAULT 1,
     FOREIGN KEY (id_producto) REFERENCES producto(id),
     FOREIGN KEY (id_pedido) REFERENCES pedido(id)
